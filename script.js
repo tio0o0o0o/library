@@ -3,6 +3,13 @@ const removeAllButton = document.querySelector("#removeAllButton");
 const cardTemplate = document.querySelector("#cardTemplate");
 const article = document.querySelector("article");
 const newBookModal = document.querySelector("#newBookModal");
+const newBookButton = document.querySelector("#newBookButton");
+const newBookTitle = document.querySelector("#newBookTitle");
+const newBookAuthor = document.querySelector("#newBookAuthor");
+const newBookRead = document.querySelector("#newBookRead");
+const newBookCover = document.querySelector("#newBookCover");
+const closeModal = document.querySelector("#closeModal");
+
 
 // Data logic 
 function Book(title, author, cover, read, randomId) {
@@ -54,7 +61,7 @@ Library.prototype.generateRandomID = function (title) {
 
 let myLibrary = new Library("My Library");
 
-myLibrary.add("Steve Jobs", "Isaac Walterson", "assets/images/steve-jobs.webp", false);
+myLibrary.add("Steve Jobs", "Isaac Walterson", "assets/images/steve-jobs.webp", true);
 myLibrary.add("The Hobbit", "J. R. R. Tolkien", "assets/images/hobbit.webp", false);
 myLibrary.add("Zero To One", "Peter Thiel", "assets/images/zero-to-one.webp", false);
 myLibrary.add("Atlas Shrugged", "Ayn Rand", "assets/images/atlas-shrugged.webp", false);
@@ -66,10 +73,13 @@ function addToDOM(title, author, cover, read, randomId) {
     let titleText = cardClone.querySelector(".title");
     let authorText = cardClone.querySelector(".author");
     let coverImage = cardClone.querySelector(".cover");
+    let readStatus = cardClone.querySelector(".readStatus");
 
     titleText.textContent = title;
     authorText.textContent = author;
     coverImage.src = cover;
+    if (read) readStatus.src = "assets/images/have-read.svg";
+    else readStatus.src = "assets/images/not-read.svg";
 
     // Assigning randomId to card
     card.dataset.randomId = randomId;
@@ -107,8 +117,6 @@ myLibrary.books.forEach((book) => {
 
 addButton.addEventListener("click", () => {
     newBookModal.showModal();
-    // let newBook = myLibrary.add("Hitchhiker's Guide to the Universe Ultimate Edition", "George Orwell", "assets/images/hobbit.webp", true);
-    // addToDOM(newBook.title, newBook.author, newBook.cover, newBook.read, newBook.randomId);
 });
 
 removeAllButton.addEventListener("click", () => {
@@ -116,3 +124,19 @@ removeAllButton.addEventListener("click", () => {
     removeAllFromDOM();
 });
 
+newBookButton.addEventListener("click", () => {
+    let cover = "assets/images/book.webp";
+    let newBook = myLibrary.add(newBookTitle.value, newBookAuthor.value, cover, newBookRead.checked);
+    addToDOM(newBook.title, newBook.author, newBook.cover, newBook.read, newBook.randomId);
+    newBookTitle.value = "";
+    newBookAuthor.value = "";
+    newBookRead.checked = false;
+    // newBookModal.close();
+});
+
+closeModal.addEventListener("click", () => {
+    newBookTitle.value = "";
+    newBookAuthor.value = "";
+    newBookRead.checked = false;
+    newBookModal.close();
+});

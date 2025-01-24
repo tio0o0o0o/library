@@ -22,6 +22,8 @@
     <article>
         <template id="cardTemplate">
             <div class="card">
+                <div class="triangle"></div>
+                <img src="assets/images/have-read.svg" alt="Read status" class="readStatus">
                 <img class="cover" src="assets/images/atlas-shrugged.webp" alt="Book cover">
                 <div>
                     <p class="title"></p>
@@ -32,19 +34,19 @@
         </template>
     </article>
     <dialog id="newBookModal">
-        <div class="newBookWrapper">
+        <form class="newBookWrapper">
             <div class="titleWrapper">
                 <h1>New Book</h1>
-                <input type="image" src="assets/images/cross.svg" alt="Cross">
+                <input type="image" src="assets/images/cross.svg" alt="Cross" id="closeModal">
             </div>
-            <input type="text" placeholder="Title">
-            <input type="text" placeholder="Author">
+            <input type="text" placeholder="Title" id="newBookTitle" required aria-label="Title">
+            <input type="text" placeholder="Author" id="newBookAuthor" required aria-label="Author">
             <div class="checkboxWrapper">
-                <input type="checkbox" id="readCheckbox">
+                <input type="checkbox" id="newBookRead">
                 <label for="readCheckbox">Have you read it?</label>
             </div>
-            <button type="button">Add</button>
-        </div>
+            <button type="submit" id="newBookButton">Add</button>
+        </form>
     </dialog>
 </body>
 </html>
