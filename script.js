@@ -92,6 +92,10 @@ function addToDOM(title, author, pages, read, randomId) {
         authorText.textContent = "Skibidi Sigma";
         pagesText.textContent = 420;
     });
+
+    readToggle.addEventListener("input", () => {
+        myLibrary.update(card.dataset.randomId, "read", readToggle.checked);
+    });
 }
 
 function removeAllFromDOM() {
