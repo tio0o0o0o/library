@@ -23,17 +23,27 @@ Library.prototype.add = function(title, author, pages, read) {
     this.books.push(newBook);
     return newBook;
 }
-Library.prototype.remove = function(title) {
+Library.prototype.remove = function(randomId) {
     this.books = this.books.filter((book) => {
-        return book.title !== title;
+        return book.randomId !== randomId;
     }); 
 }
 Library.prototype.removeAll = function() {
     this.books = [];
 },
-Library.prototype.update = function(title, targetAttribute, newValue) {
+Library.prototype.update = function(randomId, targetAttribute, newValue) {
     this.books.map((book) => {
-        if (book.title === title) book[targetAttribute] = newValue;
+        if (book.randomId === randomId) book[targetAttribute] = newValue;
+    });
+}
+Library.prototype.updateAll = function(randomId, title, author, pages, read) {
+    this.books.map((book) => {
+        if (book.randomId === randomId) {
+            book.title = title;
+            book.author = author;
+            book.pages = pages;
+            book.read = read;
+        }
     });
 }
 Library.prototype.generateRandomID = function(title) {
@@ -57,18 +67,33 @@ function addToDOM(title, author, pages, read, randomId) {
     let titleText = cardClone.querySelector(".title");
     let authorText = cardClone.querySelector(".author");
     let pagesText = cardClone.querySelector(".pages");
-    let readText = cardClone.querySelector(".read");
+    let removeButton = cardClone.querySelector("#removeButton");
+    let updateButton = cardClone.querySelector("#updateButton");
+    let readToggle = cardClone.querySelector("#readToggle");
 
     titleText.textContent = title;
     authorText.textContent = author;
     pagesText.textContent = pages;
-    readText.textContent = read;
+    readToggle.checked = read;
 
     // Assigning randomId to card
     card.dataset.randomId = randomId;
 
     article.appendChild(cardClone);
+
+    removeButton.addEventListener("click", () => {
+        myLibrary.remove(card.dataset.randomId);
+        card.remove();
+    });
+
+    updateButton.addEventListener("click", () => {
+        myLibrary.updateAll("The Among Us Guidebook", "Skibidi Sigma", 420, true);
+        titleText.textContent = "The Among Us Guidebook";
+        authorText.textContent = "Skibidi Sigma";
+        pagesText.textContent = 420;
+    });
 }
+
 function removeAllFromDOM() {
     while (article.hasChildNodes()) {
         article.removeChild(article.lastChild);
