@@ -1,0 +1,10 @@
+/* CSS RESET */
+*, *::after, *::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    appearance: none;
+    text-decoration: none;
+    list-style: none;
+}
+/* CSS RESET END */
