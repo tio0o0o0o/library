@@ -4,10 +4,10 @@ const cardTemplate = document.querySelector("#cardTemplate");
 const article = document.querySelector("article");
 
 // Data logic 
-function Book(title, author, pages, read, randomId) {
+function Book(title, author, cover, read, randomId) {
     this.title = title;
     this.author = author;
-    this.pages = pages;
+    this.cover = cover;
     this.read = read;
     this.randomId = randomId;
 }
@@ -16,86 +16,80 @@ function Library(name) {
     this.name = name,
     this.books = []
 }
-Library.prototype.add = function(title, author, pages, read) {
+Library.prototype.add = function (title, author, cover, read) {
     // Generate ID for associating data with DOM
     let randomId = this.generateRandomID(title);
-    let newBook = new Book(title, author, pages, read, randomId);
+    let newBook = new Book(title, author, cover, read, randomId);
     this.books.push(newBook);
     return newBook;
 }
-Library.prototype.remove = function(randomId) {
+Library.prototype.remove = function (randomId) {
     this.books = this.books.filter((book) => {
         return book.randomId !== randomId;
-    }); 
-}
-Library.prototype.removeAll = function() {
-    this.books = [];
-},
-Library.prototype.update = function(randomId, targetAttribute, newValue) {
-    this.books.map((book) => {
-        if (book.randomId === randomId) book[targetAttribute] = newValue;
     });
 }
-Library.prototype.updateAll = function(randomId, title, author, pages, read) {
+Library.prototype.removeAll = function () {
+    this.books = [];
+},
+    Library.prototype.update = function (randomId, targetAttribute, newValue) {
+        this.books.map((book) => {
+            if (book.randomId === randomId) book[targetAttribute] = newValue;
+        });
+    }
+Library.prototype.updateAll = function (randomId, title, author, cover, read) {
     this.books.map((book) => {
         if (book.randomId === randomId) {
             book.title = title;
             book.author = author;
-            book.pages = pages;
+            book.cover = cover;
             book.read = read;
         }
     });
 }
-Library.prototype.generateRandomID = function(title) {
+Library.prototype.generateRandomID = function (title) {
     let randomInt = Math.floor(Math.random() * 9999);
     return title + randomInt.toString();
 }
 
 let myLibrary = new Library("My Library");
 
-myLibrary.add("Isaac Walterson", "Steve Jobs", "650", false);
-myLibrary.add("George Orwell", "1984", "540", true);
-myLibrary.add("Unknown", "Hitchhiker's Guide to the Universe", "850", false);
-myLibrary.remove("1984");
-myLibrary.update("Steve Jobs", "read", true);
-
+myLibrary.add("Steve Jobs", "Isaac Walterson", "assets/images/steve-jobs.webp", false);
+myLibrary.add("The Hobbit", "J. R. R. Tolkien", "assets/images/hobbit.webp", false);
+myLibrary.add("Zero To One", "Peter Thiel", "assets/images/zero-to-one.webp", false);
+myLibrary.add("Atlas Shrugged", "Ayn Rand", "assets/images/atlas-shrugged.webp", false);
 
 // DOM manipulation
-function addToDOM(title, author, pages, read, randomId) {
+function addToDOM(title, author, cover, read, randomId) {
     let cardClone = cardTemplate.content.cloneNode(true);
     let card = cardClone.querySelector(".card");
     let titleText = cardClone.querySelector(".title");
     let authorText = cardClone.querySelector(".author");
-    let pagesText = cardClone.querySelector(".pages");
-    let removeButton = cardClone.querySelector("#removeButton");
-    let updateButton = cardClone.querySelector("#updateButton");
-    let readToggle = cardClone.querySelector("#readToggle");
+    let coverImage = cardClone.querySelector(".cover");
 
     titleText.textContent = title;
     authorText.textContent = author;
-    pagesText.textContent = pages;
-    readToggle.checked = read;
+    coverImage.src = cover;
 
     // Assigning randomId to card
     card.dataset.randomId = randomId;
 
     article.appendChild(cardClone);
 
-    removeButton.addEventListener("click", () => {
-        myLibrary.remove(card.dataset.randomId);
-        card.remove();
-    });
+    // removeButton.addEventListener("click", () => {
+    //     myLibrary.remove(card.dataset.randomId);
+    //     card.remove();
+    // });
 
-    updateButton.addEventListener("click", () => {
-        myLibrary.updateAll("The Among Us Guidebook", "Skibidi Sigma", 420, true);
-        titleText.textContent = "The Among Us Guidebook";
-        authorText.textContent = "Skibidi Sigma";
-        pagesText.textContent = 420;
-    });
+    // updateButton.addEventListener("click", () => {
+    //     myLibrary.updateAll("The Among Us Guidebook", "Skibidi Sigma", 420, true);
+    //     titleText.textContent = "The Among Us Guidebook";
+    //     authorText.textContent = "Skibidi Sigma";
+    //     pagesText.textContent = 420;
+    // });
 
-    readToggle.addEventListener("input", () => {
-        myLibrary.update(card.dataset.randomId, "read", readToggle.checked);
-    });
+    // readToggle.addEventListener("input", () => {
+    //     myLibrary.update(card.dataset.randomId, "read", readToggle.checked);
+    // });
 }
 
 function removeAllFromDOM() {
@@ -107,12 +101,12 @@ function removeAllFromDOM() {
 
 // Events
 myLibrary.books.forEach((book) => {
-    addToDOM(book.title, book.author, book.pages, book.read, book.randomId);
+    addToDOM(book.title, book.author, book.cover, book.read, book.randomId);
 });
 
 addButton.addEventListener("click", () => {
-    let newBook = myLibrary.add("1984", "George Orwell", 650, true);
-    addToDOM(newBook.title, newBook.author, newBook.pages, newBook.read, newBook.randomId);
+    let newBook = myLibrary.add("Hitchhiker's Guide to the Universe Ultimate Edition", "George Orwell", "assets/images/hobbit.webp", true);
+    addToDOM(newBook.title, newBook.author, newBook.cover, newBook.read, newBook.randomId);
 });
 
 removeAllButton.addEventListener("click", () => {

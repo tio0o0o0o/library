@@ -8,17 +8,26 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <button id="addButton">Add</button>
-    <button id="removeAllButton">Remove All</button>
+    <nav>
+        <h1>nerd.io 🤓</h1>
+        <div class="buttons">
+            <button id="removeAllButton">
+                <img src="assets/images/bin.svg" alt="Bin"> Delete All
+            </button>
+            <button id="addButton">
+                <img src="assets/images/add.svg" alt="Add" > Add
+            </button>
+        </div>
+    </nav>
     <article>
         <template id="cardTemplate">
             <div class="card">
-                <p class="title"></p>
+                <img class="cover" src="assets/images/atlas-shrugged.webp" alt="Book cover">
+                <div>
+                    <p class="title"></p>
+                    <input id="options" type="image" src="assets/images/options.svg" alt="Options">
+                </div>
                 <p class="author"></p>
-                <p class="pages"></p>
-                <button id="removeButton">Remove</button>
-                <button id="updateButton">Update</button>
-                <input type="checkbox" id="readToggle">
             </div>
         </template>
     </article>

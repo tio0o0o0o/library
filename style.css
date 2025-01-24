@@ -9,19 +9,101 @@
 }
 /* CSS RESET END */
 
-article {
+:root {
+    --black: rgb(37, 37, 37);
+    --lightBlack: rgb(44, 44, 44);
+    --lightShade: rgba(255, 255, 255, 0.05);
+}
+
+body {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: max-content 1fr;
+    color: white;
+}
+
+nav {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding: 20px 0;
+    background-color: var(--lightBlack);
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    box-shadow: 4px 0 8px -8px rgb(0, 0, 0);
+
+    & h1 {
+        font-size: 35px;
+        padding-left: 15px;
+    }
+
+    & .buttons {
+        display: flex;
+        flex-direction: column;
+    }
+
+    & button {
+        background-color: transparent;
+        border: none;
+        width: 100%;
+        padding: 20px 30px;
+        height: fit-content;
+        color: white;
+        font-size: 20px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    & button:hover {
+        background-color: var(--lightShade);
+    }
+
+    & button img {
+        width: 50px;
+    }
+}
+
+article {
+    background-color: var(--black);
+    display: flex;
+    flex-wrap: wrap;
     gap: 10px;
+    padding: 30px;
 }
 
 .card {
+    height: 550px;
+    width: min-content;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(46, 46, 46);
-    color: white;
-    border-radius: 20px;
-    padding: 20px;
+
+    & .title {
+        font-size: 20px;
+        text-wrap: wrap;
+    }
+
+    & .author {
+        font-size: 18px;
+        color: grey;
+        margin: 0 5px;
+    }
+
+    & img {
+        height: 450px;
+        border-radius: 10px;
+    }
+
+    & > div {
+        margin: 10px 5px 5px 5px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    & input {
+        width: 30px;
+        height: 30px;
+    }
 }
