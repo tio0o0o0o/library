@@ -131,7 +131,7 @@ newBookButton.addEventListener("click", () => {
     newBookTitle.value = "";
     newBookAuthor.value = "";
     newBookRead.checked = false;
-    // newBookModal.close();
+    newBookModal.close();
 });
 
 closeModal.addEventListener("click", () => {
