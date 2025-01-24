@@ -8,3 +8,20 @@
     list-style: none;
 }
 /* CSS RESET END */
+
+article {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(46, 46, 46);
+    color: white;
+    border-radius: 20px;
+    padding: 20px;
+}
