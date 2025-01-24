@@ -2,6 +2,7 @@ const addButton = document.querySelector("#addButton");
 const removeAllButton = document.querySelector("#removeAllButton");
 const cardTemplate = document.querySelector("#cardTemplate");
 const article = document.querySelector("article");
+const newBookModal = document.querySelector("#newBookModal");
 
 // Data logic 
 function Book(title, author, cover, read, randomId) {
@@ -105,8 +106,9 @@ myLibrary.books.forEach((book) => {
 });
 
 addButton.addEventListener("click", () => {
-    let newBook = myLibrary.add("Hitchhiker's Guide to the Universe Ultimate Edition", "George Orwell", "assets/images/hobbit.webp", true);
-    addToDOM(newBook.title, newBook.author, newBook.cover, newBook.read, newBook.randomId);
+    newBookModal.showModal();
+    // let newBook = myLibrary.add("Hitchhiker's Guide to the Universe Ultimate Edition", "George Orwell", "assets/images/hobbit.webp", true);
+    // addToDOM(newBook.title, newBook.author, newBook.cover, newBook.read, newBook.randomId);
 });
 
 removeAllButton.addEventListener("click", () => {
