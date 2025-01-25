@@ -64,9 +64,9 @@ myLibrary.add("Atlas Shrugged", "Ayn Rand", "assets/images/atlas-shrugged.webp",
 
 
 // DOM state
-const domState = (function() {
-    const article = document.querySelector("article");
-    const cardTemplate = document.querySelector("#cardTemplate");
+const domState = (function(doc) {
+    const article = doc.querySelector("article");
+    const cardTemplate = doc.querySelector("#cardTemplate");
 
     const removeBooks = function() {
         while (article.hasChildNodes()) {
@@ -95,9 +95,9 @@ const domState = (function() {
         });
     }
 
-    const newBookTitle = document.querySelector("#newBookTitle");
-    const newBookAuthor = document.querySelector("#newBookAuthor");
-    const newBookRead = document.querySelector("#newBookRead");
+    const newBookTitle = doc.querySelector("#newBookTitle");
+    const newBookAuthor = doc.querySelector("#newBookAuthor");
+    const newBookRead = doc.querySelector("#newBookRead");
 
     const formValid = function() {
         if (newBookTitle.value !== "" && newBookAuthor.value !== "") return true;
@@ -115,7 +115,7 @@ const domState = (function() {
     }
 
     return { updateBooks, formValid, getForm, clearForm };
-})();
+})(document);
 
 
 // Events
