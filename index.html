@@ -34,19 +34,19 @@
         </template>
     </article>
     <dialog id="newBookModal">
-        <div class="newBookWrapper">
+        <form class="newBookWrapper">
             <div class="titleWrapper">
                 <h1>New Book</h1>
                 <input type="image" src="assets/images/cross.svg" alt="Cross" id="closeModal">
             </div>
-            <input type="text" placeholder="Title" id="newBookTitle" aria-label="Title">
-            <input type="text" placeholder="Author" id="newBookAuthor" aria-label="Author">
+            <input type="text" placeholder="Title" id="newBookTitle" aria-label="Title" required>
+            <input type="text" placeholder="Author" id="newBookAuthor" aria-label="Author" required>
             <div class="checkboxWrapper">
                 <input type="checkbox" id="newBookRead">
                 <label for="readCheckbox">Have you read it?</label>
             </div>
             <button type="button" id="newBookButton">Add</button>
-        </div>
+        </form>
     </dialog>
 </body>
 </html>

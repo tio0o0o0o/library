@@ -1,12 +1,8 @@
 const addButton = document.querySelector("#addButton");
 const removeAllButton = document.querySelector("#removeAllButton");
-const cardTemplate = document.querySelector("#cardTemplate");
-const article = document.querySelector("article");
 const newBookModal = document.querySelector("#newBookModal");
 const newBookButton = document.querySelector("#newBookButton");
-const newBookTitle = document.querySelector("#newBookTitle");
-const newBookAuthor = document.querySelector("#newBookAuthor");
-const newBookRead = document.querySelector("#newBookRead");
+
 const newBookCover = document.querySelector("#newBookCover");
 const closeModal = document.querySelector("#closeModal");
 
@@ -66,54 +62,64 @@ myLibrary.add("The Hobbit", "J. R. R. Tolkien", "assets/images/hobbit.webp", fal
 myLibrary.add("Zero To One", "Peter Thiel", "assets/images/zero-to-one.webp", false);
 myLibrary.add("Atlas Shrugged", "Ayn Rand", "assets/images/atlas-shrugged.webp", false);
 
-// DOM manipulation
-function addToDOM(title, author, cover, read, randomId) {
-    let cardClone = cardTemplate.content.cloneNode(true);
-    let card = cardClone.querySelector(".card");
-    let titleText = cardClone.querySelector(".title");
-    let authorText = cardClone.querySelector(".author");
-    let coverImage = cardClone.querySelector(".cover");
-    let readStatus = cardClone.querySelector(".readStatus");
 
-    titleText.textContent = title;
-    authorText.textContent = author;
-    coverImage.src = cover;
-    if (read) readStatus.src = "assets/images/have-read.svg";
-    else readStatus.src = "assets/images/not-read.svg";
+// DOM state
+const domState = (function() {
+    const article = document.querySelector("article");
+    const cardTemplate = document.querySelector("#cardTemplate");
 
-    // Assigning randomId to card
-    card.dataset.randomId = randomId;
-
-    article.appendChild(cardClone);
-
-    // removeButton.addEventListener("click", () => {
-    //     myLibrary.remove(card.dataset.randomId);
-    //     card.remove();
-    // });
-
-    // updateButton.addEventListener("click", () => {
-    //     myLibrary.updateAll("The Among Us Guidebook", "Skibidi Sigma", 420, true);
-    //     titleText.textContent = "The Among Us Guidebook";
-    //     authorText.textContent = "Skibidi Sigma";
-    //     pagesText.textContent = 420;
-    // });
-
-    // readToggle.addEventListener("input", () => {
-    //     myLibrary.update(card.dataset.randomId, "read", readToggle.checked);
-    // });
-}
-
-function removeAllFromDOM() {
-    while (article.hasChildNodes()) {
-        article.removeChild(article.lastChild);
+    const removeBooks = function() {
+        while (article.hasChildNodes()) {
+            article.removeChild(article.lastChild);
+        }
     }
-}
+
+    const addBook = function(book) {
+        const cardClone = cardTemplate.content.cloneNode(true);
+
+        // Assigning randomId to card
+        cardClone.querySelector(".card").dataset.randomId = book.randomId;
+
+        cardClone.querySelector(".title").textContent = book.title;
+        cardClone.querySelector(".author").textContent = book.author;
+        cardClone.querySelector(".cover").src = book.cover;
+        cardClone.querySelector(".readStatus").src = book.read ? "assets/images/have-read.svg" : "assets/images/not-read.svg";
+
+        article.appendChild(cardClone);
+    }
+
+    const updateBooks = function() {
+        removeBooks();
+        myLibrary.books.forEach((book) => {
+            addBook(book);
+        });
+    }
+
+    const newBookTitle = document.querySelector("#newBookTitle");
+    const newBookAuthor = document.querySelector("#newBookAuthor");
+    const newBookRead = document.querySelector("#newBookRead");
+
+    const formValid = function() {
+        if (newBookTitle.value !== "" && newBookAuthor.value !== "") return true;
+        else return false;
+    }
+
+    const clearForm = function() {
+        newBookTitle.value = "";
+        newBookAuthor.value = "";
+        newBookRead.checked = false;
+    }
+
+    const getForm = function() {
+        return { title: newBookTitle.value, author: newBookAuthor.value, read: newBookRead.checked };
+    }
+
+    return { updateBooks, formValid, getForm, clearForm };
+})();
 
 
 // Events
-myLibrary.books.forEach((book) => {
-    addToDOM(book.title, book.author, book.cover, book.read, book.randomId);
-});
+domState.updateBooks();
 
 addButton.addEventListener("click", () => {
     newBookModal.showModal();
@@ -121,22 +127,23 @@ addButton.addEventListener("click", () => {
 
 removeAllButton.addEventListener("click", () => {
     myLibrary.removeAll();
-    removeAllFromDOM();
+    domState.updateBooks();
 });
 
 newBookButton.addEventListener("click", () => {
-    let cover = "assets/images/book.webp";
-    let newBook = myLibrary.add(newBookTitle.value, newBookAuthor.value, cover, newBookRead.checked);
-    addToDOM(newBook.title, newBook.author, newBook.cover, newBook.read, newBook.randomId);
-    newBookTitle.value = "";
-    newBookAuthor.value = "";
-    newBookRead.checked = false;
-    newBookModal.close();
+    const cover = "assets/images/book.webp";
+
+    if (domState.formValid()) {
+        const {title, author, read} = domState.getForm;
+        myLibrary.add(title, author, cover, read);
+        domState.updateBooks();
+        domState.clearForm();
+        newBookModal.close();
+    }
 });
 
 closeModal.addEventListener("click", () => {
-    newBookTitle.value = "";
-    newBookAuthor.value = "";
-    newBookRead.checked = false;
+    domState.clearForm();
     newBookModal.close();
 });
+
