@@ -5,12 +5,24 @@ class Book {
         this.author = author;
         this.pages = pages;
         this.read = read;
+        this.cover = this.#getRandomCover();
         this.uniqueId = this.#generateUniqueId(title, author);
     }
 
     #generateUniqueId(title, author) {
         const randomInt = Math.floor(Math.random() * 9999);
         return title + author + randomInt;
+    }
+
+    #getRandomCover() {
+        const randomInt = Math.floor(Math.random() * 3);
+        const path = "assets/images/"
+        const covers = [
+            "book.png",
+            "book2.png",
+            "book3.png"
+        ];
+        return path + covers[randomInt];
     }
 }
 
@@ -60,8 +72,11 @@ class Library {
 
 Library.add("Steve Jobs", "Isaac Walterson", 650, false);
 Library.add("Atomic Habits", "James Clear", 420, true);
-Library.updateProperty(Library.books[0].uniqueId, "author", "Walter Isaacson");
-console.log(Library.books);
+Library.add("1984", "George Orwell", 550, true);
+Library.add("Zero To One", "Peter Thiel", 620, false);
+Library.add("Atlas Shrugged", "Ayn Rand", 420, true);
+Library.add("Lord of the Flies", "William Golding", 800, false);
+Library.add("Sapiens", "Yuval N. Harari", 720, false);
 
 // 3. DisplayController class
 class DisplayController {
@@ -74,6 +89,7 @@ class DisplayController {
         cardFragment.querySelector(".title").textContent = book.title;
         cardFragment.querySelector(".author").textContent = book.author;
         cardFragment.querySelector(".pages").textContent = book.pages;
+        cardFragment.querySelector(".cover").src = book.cover;
         const readText = cardFragment.querySelector(".read");
         readText.textContent = book.read ? "read" : "not read";
 
