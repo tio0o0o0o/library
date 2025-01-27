@@ -15,6 +15,7 @@
     --lightBlack: rgb(44, 44, 44);
     --lightShade: rgba(255, 255, 255, 0.05);
     --accentColor: rgb(255, 208, 0);
+    --red: rgb(197, 61, 61);
 }
 
 body {
@@ -72,8 +73,8 @@ article {
     background-color: var(--black);
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    padding: 30px;
+    gap: 25px;
+    padding: 40px;
 }
 
 .card {
@@ -84,14 +85,52 @@ article {
     position: relative;
 
     & .title {
-        font-size: 20px;
+        font-size: 30px;
         text-wrap: wrap;
+        margin: 10px 5px 5px 5px;
+    }
+
+    & .subtext {
+        font-size: 22px;
+        color: grey;
+        margin: 0 5px;
+    }
+
+    & .actionsText {
+        font-size: 22px;
+        color: grey;
+        margin: 5px 5px;
     }
 
     & .author {
-        font-size: 18px;
-        color: grey;
-        margin: 0 5px;
+        display: inline;
+    }
+
+    & .pages {
+        display: inline;
+    }
+
+    & .read {
+        display: inline;
+        cursor: pointer;
+        font-weight: bold;
+        user-select: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    & .remove {
+        display: inline;
+        font-weight: bold;
+        cursor: pointer;
+        user-select: none;
+        color: var(--red);
+
+        &:hover {
+            text-decoration: underline;
+        }
     }
 
     & img:not(.readStatus) {
@@ -99,35 +138,9 @@ article {
         border-radius: 10px;
     }
 
-    & > div:not(.triangle) {
-        margin: 10px 5px 5px 5px;
-        display: flex;
-        justify-content: space-between;
-    }
-
     & input {
         width: 30px;
         height: 30px;
-    }
-
-    .triangle {
-        border-left: 50px solid transparent;
-        border-right: 50px solid var(--accentColor);
-        border-top: 50px solid var(--accentColor);
-        border-bottom: 50px solid transparent;
-        position: absolute;
-        top: 0;
-        right: 0;
-        border-top-right-radius: 10px;
-    }
-
-    .readStatus {
-        position: absolute;
-        top: 6px;
-        right: 6px;
-        z-index: 2;
-        width: 40px;
-        height: 40px;
     }
 }
 

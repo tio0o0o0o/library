@@ -22,14 +22,10 @@
     <article>
         <template id="cardTemplate">
             <div class="card">
-                <div class="triangle"></div>
-                <img src="assets/images/have-read.svg" alt="Read status" class="readStatus">
-                <img class="cover" src="assets/images/atlas-shrugged.webp" alt="Book cover">
-                <div>
-                    <p class="title"></p>
-                    <input id="options" type="image" src="assets/images/options.svg" alt="Options">
-                </div>
-                <p class="author"></p>
+                <img class="cover" src="assets/images/book.png" alt="Book cover">
+                <p class="title"></p>
+                <div class="subtext"><p class="author">author</p> • <p class="pages">0</p> pages</div>
+                <div class="actionsText"><p class="remove">remove</p> • <p class="read">not read</p></div>
             </div>
         </template>
     </article>
@@ -41,6 +37,7 @@
             </div>
             <input type="text" placeholder="Title" id="newBookTitle" aria-label="Title" required>
             <input type="text" placeholder="Author" id="newBookAuthor" aria-label="Author" required>
+            <input type="tel" placeholder="Pages" id="newBookPages" aria-label="Pages" required>
             <div class="checkboxWrapper">
                 <input type="checkbox" id="newBookRead">
                 <label for="readCheckbox">Have you read it?</label>
